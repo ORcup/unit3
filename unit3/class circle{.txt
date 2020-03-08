@@ -1,0 +1,48 @@
+class circle{
+    public:
+     int x;
+     int y;
+     int r;
+};
+circle s1,s2,s3,s4;        //定义矩形的四条边在circle类里
+class conner{              //定义圆与矩形或圆与圆相切剩下的空间
+    public:
+     circle a;
+     circle b;
+     circle c;
+};
+int m_circle(int m){
+    circle* cir[m];
+    cir[1].x=cir[1].y=0;cir[1].r=1;   //建立第一个圆
+    conner* con[3*m+1]=NULL;               //第一圆会产生四个剩余空间，后面每个圆会产生三个
+    con[1].a=s1;con[1].b=s2;con[1].c=cir[1];
+    con[2].a=s2;con[2].b=s3;con[2].c=cir[1];
+    con[3].a=s3;con[3].b=s4;con[3].c=cir[1];
+    con[4].a=s4;con[4].b=s1;con[4].c=cir[1];//剩余空间（conner）是由它的三条边界来定义的                   
+    for(int i=2;i<=m;i++){
+        cir[i].x=findx(con[1]);     //在最大的剩余空间中寻求内接圆
+        cir[i].y=findy(con[1]);
+        cir[i].r=findr(cir[i],con[1]);
+        con[3*i-1].a=con[1].a;con[3*i-1].b=con[1].b;con[3*i-1].c=cir[i];  //创建新的剩余空间并重新排序
+        con[3*i].a=con[1].b;con[3*i].b=con[1].c;con[3*i].c=cir[i];
+        con[3*i+1].a=con[1].c;con[3*i+1].b=con[1].a;con[3*i+1].c=cir[i];
+        max(conner,con[3*i-1],con[3*i],con[3*i+1]);//将Conner按面积由大到小排序
+    }
+};
+void max(conner*c[m],conner*a,conner*b,conner*c){
+};
+int findx(conner*a){
+    //取中值
+}；
+int findy(conner*a){
+    //取中值
+}；
+int findr(circle*a,conner*b){
+    //按步长试探半径
+}；
+void output{
+    for(int i=1;i<m;i++){
+        cout<<"("<<cir[i].x<<","<<cir[i].y<<")"<<"  "<<"R="<<cir[i].r;
+        cout<<endl;
+    }
+}
